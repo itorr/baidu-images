@@ -123,7 +123,7 @@ const app = new Vue({
 				let _left = index * (imageWidth + margin) + margin;
 				let _top = cols[index];
 
-				if(isMobile){
+				if(col === 2){
 					_left = index % 2 === 0 ? 0 : offsetWidth - imageWidth;
 				}
 
