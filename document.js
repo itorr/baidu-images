@@ -43,6 +43,7 @@ const hostName = location.hostname;
 let baseAPIURL = `http://${hostName}:60912/api/`;
 if(/magiconch/.test(hostName)) baseAPIURL = `//lab.magiconch.com/api/`;
 
+const size = 30;
 
 const app = new Vue({
 	el,
@@ -64,7 +65,7 @@ const app = new Vue({
 			}
 			this.runing = true;
 
-			const uri = `${baseAPIURL}baidu/images?text=${encodeURIComponent(text)}&index=${index}`;
+			const uri = `${baseAPIURL}baidu/images?text=${encodeURIComponent(text)}&index=${index}&size=${size}`;
 
 			request('get',uri,null,r=>{
 				this.runing = false;
@@ -106,15 +107,10 @@ const app = new Vue({
 				imageWidth = Math.floor( (offsetWidth - margin) / col );
 			}
 
-			const cols = [];
-			for(let i = 0;i<col;i++){
-				cols[i] = margin;
-			}
+			const cols = new Array(col);
+			cols.fill(margin);
 
-			const getMinCol = _=>{
-				const v = Math.min.apply(Math,cols)
-				return cols.indexOf(v);
-			}
+			const getMinCol = _=> cols.indexOf(Math.min.apply(Math,cols))
 
 			images.forEach(image=>{
 				let _height = Math.round(imageWidth / image.width * image.height);
@@ -140,19 +136,14 @@ const app = new Vue({
 				this.$set(image,'_top',_top)
 			});
 
-			const imagesHeight = Math.max.apply(Math,cols)
-			app.imagesHeight = imagesHeight;
+			app.imagesHeight = Math.max.apply(Math,cols)
 
 		},
 		prev(){
-			this.search(this.text,this.index - 30,true,_=>scrollTo(0,0));
+			this.search(this.text,this.index - size,true,_=>scrollTo(0,0));
 		},
 		next(){
-			this.search(this.text,this.index + this.images.length,true,_=>scrollTo(0,0));
-		},
-		onload(image){
-			// image.loaded = true
-			this.$set(image,'loaded',true)
+			this.search(this.text,this.index + size,true,_=>scrollTo(0,0));
 		}
 	},
 	watch:{
