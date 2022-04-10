@@ -35,6 +35,7 @@ const data = {
 	index:0,
 	runing:false,
 	simple:true,
+	animation:false,
 	imagesHeight:0
 };
 

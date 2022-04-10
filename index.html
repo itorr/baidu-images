@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<title>百度图像极简搜索 - 神奇海螺实验室</title>
-<meta name="discription" content="百度图像极简搜索">
+<title>百度图像搜索极简版 - 神奇海螺实验室</title>
+<meta name="discription" content="百度图像搜索极简版">
 <meta name="viewport" content="width=device-width,user-scalable=0">
 <link rel="stylesheet" href="document.css">
-<div id="el" ref="el" :data-runing="runing" v-cloak :data-image-length="images.length" :data-simple="simple">
+<div id="el" ref="el" :data-runing="runing" v-cloak :data-image-length="images.length" :data-simple="simple" :data-animation="animation">
     <form @submit.stop.prevent="searchSubmit">
         <input type="search" v-model.lazy.trim="text" placeholder="输入关键字提交搜索">
     </form>
@@ -23,14 +23,21 @@
         <h1>搜索中...</h1>
     </div>
     <div class="welcome-box" v-else>
-        <h1>欢迎</h1>
-        <p>一个极简的百度图片搜索工具</p>
+        <h1>百度图像搜索极简版</h1>
+        <p>一个极简的百度图片搜索工具！</p>
         <p>
             极其偶尔在手机上用百度图片搜索时，<br>
             基础功能基本无法正常使用。
         </p>
-        <p>所以做了个只有基础功能的百度图片搜索</p>
-        <p></p>
+        <p>
+            做了个只有基础功能的百度图片搜索，<br>
+            方便你画我猜时小窗口使用。
+        </p>
+        <p style="color:gold">搜索结果全部来自于百度，观点与个人无关</p>
+        <hr class="min">
+        <p>页尾隐藏了<label class="checkbox-text-switch"><input type="checkbox" v-model="simple"><span>极简</span></label>开关，可选展示来源</p>
+        <p><label class="checkbox-text-switch"><input type="checkbox" v-model="animation"><span>动画</span></label>默认关闭，可择开启</p>
+        
         <hr>
         <p>
             <a href="https://weibo.com/reiove" target="_blank">@卜卜口</a>
@@ -44,11 +51,11 @@
     </div>
     <div class="page-box">
         <a @click.stop.prevent="prev" class="more-btn" v-if="index !== 0">上一页</a>
-        <span v-if="images.length" class="page-number">{{index}} ~ {{index+30}}</span>
+        <span v-if="images.length" class="page-number">{{index}} ~ {{index + images.length}}</span>
         <a @click.stop.prevent="next" class="more-btn" v-if="images.length === 30">下一页</a>
     </div>
     <footer>
-        <p>百度图片<label class="checkbox-text-switch"><input type="checkbox" v-model="simple"><span>极简</span></label>搜索</p>
+        <p>百度图片搜索<label class="checkbox-text-switch"><input type="checkbox" v-model="simple"><span>极简</span></label>版</p>
     </footer>
 </div>
 
