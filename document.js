@@ -124,7 +124,7 @@ const app = new Vue({
 				let _top = cols[index];
 
 				if(isMobile){
-					_left = index % 2 === 0?0: imageWidth + margin;
+					_left = index % 2 === 0 ? 0 : offsetWidth - imageWidth;
 				}
 
 				cols[index] += _height + margin;
