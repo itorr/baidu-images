@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>百度图像极简搜索 - 神奇海螺实验室</title>
+<meta name="discription" content="百度图像极简搜索">
+<meta name="viewport" content="width=device-width,user-scalable=0">
+<link rel="stylesheet" href="document.css">
+<div id="el" ref="el" :data-runing="runing" v-cloak :data-image-length="images.length" :data-simple="simple">
+    <form @submit.stop.prevent="searchSubmit">
+        <input type="search" v-model.lazy.trim="text" placeholder="输入关键字提交搜索">
+    </form>
+    <div class="images-box" ref="images-box" v-if="images.length" :style="{height:`${imagesHeight}px`}">
+        <div class="image-item" v-for="image in images" :key="image.src" :style="{width:image._width+'px',top:image._top+'px',left:image._left+'px',color:`#${image.hex}`}">
+            <a class="image-link" :href="image.ori" target="_blank" :style="{width:image._width+'px',height:image._height+'px'}">
+                <img :src="image.src" :data-loaded="image.loaded" load="onload(image)" :style="{width:image._width+'px',height:image._height+'px'}">
+            </a>
+            <a class="image-origin-link" :href="image.url" target="_blank">
+                <span class="title">{{image.title}}</span>
+                <span class="link">{{new URL(image.url).hostname.replace(/^www\./,'')}}</span>
+            </a>
+        </div>
+    </div>
+    <div class="welcome-box" v-else-if="runing">
+        <h1>搜索中...</h1>
+    </div>
+    <div class="welcome-box" v-else>
+        <h1>欢迎</h1>
+        <p>一个极简的百度图片搜索工具</p>
+        <p>
+            极其偶尔在手机上用百度图片搜索时，<br>
+            基础功能基本无法正常使用。
+        </p>
+        <p>所以做了个只有基础功能的百度图片搜索</p>
+        <p></p>
+        <hr>
+        <p>
+            <a href="https://weibo.com/reiove" target="_blank">@卜卜口</a>
+            <span class="point">·</span>
+            <a href="https://github.com/itorr/baidu-images" target="_blank">GitHub</a>
+            <span class="point">·</span>
+            <a href="https://lab.magiconch.com/" target="_blank">实验室</a>
+            <span class="point">·</span>
+            <a href="https://lab.magiconch.com/nbnhhsh/sponsor.png" target="_blank">打赏</a>
+        </p>
+    </div>
+    <div class="page-box">
+        <a @click.stop.prevent="prev" class="more-btn" v-if="index !== 0">上一页</a>
+        <span v-if="images.length" class="page-number">{{index}} ~ {{index+30}}</span>
+        <a @click.stop.prevent="next" class="more-btn" v-if="images.length === 30">下一页</a>
+    </div>
+    <footer>
+        <p>百度图片<label class="checkbox-text-switch"><input type="checkbox" v-model="simple"><span>极简</span></label>搜索</p>
+    </footer>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+<script src="document.js"></script>
