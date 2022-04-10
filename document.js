@@ -93,12 +93,18 @@ const app = new Vue({
 			const imageExpectWidth = 240;
 			let col = Math.floor(offsetWidth/imageExpectWidth);
 
-			if( 310 < offsetWidth && offsetWidth < 420){
-				col = 2;
-			}
+			const isMobile = 310 < offsetWidth && offsetWidth < 720;
+
 
 			const margin = 4;
-			const imageWidth = Math.round( (offsetWidth - margin) / col - margin );
+			let imageWidth = Math.floor( (offsetWidth - margin) / col - margin );
+			// const imageWidth = Math.floor( offsetWidth / col  - margin);
+
+			
+			if( isMobile ){
+				col = 2;
+				imageWidth = Math.floor( (offsetWidth - margin) / col );
+			}
 
 			const cols = [];
 			for(let i = 0;i<col;i++){
@@ -114,8 +120,12 @@ const app = new Vue({
 				let _height = Math.round(imageWidth / image.width * image.height);
 				const index = getMinCol();
 
-				const _left = index * (imageWidth + margin) + margin;
-				const _top = cols[index];
+				let _left = index * (imageWidth + margin) + margin;
+				let _top = cols[index];
+
+				if(isMobile){
+					_left = index % 2 === 0?0: imageWidth + margin;
+				}
 
 				cols[index] += _height + margin;
 
