@@ -55,9 +55,11 @@ const app = new Vue({
 			if(!text){
 				this.index = 0;
 				this.images = [];
-				const title = '百度图片极简搜索';
+				const title = '百度图片搜索极简版';
 				document.title = title;
-				history.pushState({}, title, './');
+
+				const GET = getQuerys();
+				if(GET.text || GET.index) history.pushState({}, title, './');
 				return;
 			}
 			this.runing = true;
