@@ -73,10 +73,12 @@ const app = new Vue({
 				this.pullImages();
 
 				let uri = `./?text=${encodeURIComponent(text)}`;
+				let title = `${text}`;
 
-				if(index) uri += `&index=${encodeURIComponent(index)}`;
-
-				const title = `${text} - ${index}`;
+				if(index){
+					uri += `&index=${encodeURIComponent(index)}`;
+					title += ` - ${index}`;
+				}
 
 				document.title = title;
 				history.pushState({}, title, uri);
