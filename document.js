@@ -39,12 +39,11 @@ const data = {
 	imagesHeight:0
 };
 
-let baseAPIURL = `http://192.168.31.174:60912/api/`;
+const hostName = location.hostname;
+let baseAPIURL = `http://${hostName}:60912/api/`;
+if(/magiconch/.test(hostName)) baseAPIURL = `//lab.magiconch.com/api/`;
 
 
-if(/magiconch/.test(location.hostname)){
-	baseAPIURL = `https://lab.magiconch.com/api/`;
-}
 const app = new Vue({
 	el,
 	data,
@@ -154,8 +153,7 @@ const app = new Vue({
 	}
 })
 
-
-window.onpopstate = e=>{
+onpopstate = _=>{
 	const GET = getQuerys();
 	const text = GET.text || '';
 	const index = +GET.index || 0;
@@ -164,14 +162,15 @@ window.onpopstate = e=>{
 }
 onpopstate();
 
+onresize = _=>{
+	clearTimeout(app.T);
+	app.T = setTimeout(app.pullImages,400);
+};
+
 const loadScript = (src,el) =>{
 	el = document.createElement('script');
 	el.src = src;
 	document.body.appendChild(el);
-};
-onresize = _=>{
-	clearTimeout(app.T);
-	app.T = setTimeout(app.pullImages,400);
 };
 
 window._hmt = [];
