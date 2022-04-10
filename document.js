@@ -51,7 +51,7 @@ const app = new Vue({
 		searchSubmit(){
 			this.search(this.text);
 		},
-		search(text,index = 0,cb=_=>{}){
+		search(text,index = 0,isPop = true,cb=_=>{}){
 			if(!text){
 				this.index = 0;
 				this.images = [];
@@ -59,7 +59,7 @@ const app = new Vue({
 				document.title = title;
 
 				const GET = getQuerys();
-				if(GET.text || GET.index) history.pushState({}, title, './');
+				if(isPop || GET.text || GET.index) history.pushState({}, title, './');
 				return;
 			}
 			this.runing = true;
@@ -82,7 +82,7 @@ const app = new Vue({
 				}
 
 				document.title = title;
-				history.pushState({}, title, uri);
+				if(isPop) history.pushState({}, title, uri);
 				cb();
 			});
 		},
@@ -145,10 +145,10 @@ const app = new Vue({
 
 		},
 		prev(){
-			this.search(this.text,this.index - 30,_=>scrollTo(0,0));
+			this.search(this.text,this.index - 30,true,_=>scrollTo(0,0));
 		},
 		next(){
-			this.search(this.text,this.index + this.images.length,_=>scrollTo(0,0));
+			this.search(this.text,this.index + this.images.length,true,_=>scrollTo(0,0));
 		},
 		onload(image){
 			// image.loaded = true
@@ -170,7 +170,7 @@ onpopstate = _=>{
 	const text = GET.text || '';
 	const index = +GET.index || 0;
 	app.text = text;
-	app.search(text,index);
+	app.search(text,index,false);
 }
 onpopstate();
 
