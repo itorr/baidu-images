@@ -56,7 +56,7 @@ const app = new Vue({
 			if(!text){
 				this.index = 0;
 				this.images = [];
-				const title = '百度图片搜索极简版';
+				const title = '百度图像搜索极简版';
 				document.title = title;
 
 				const GET = getQuerys();
