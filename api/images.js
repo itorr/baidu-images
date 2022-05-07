@@ -8,6 +8,7 @@ const searchFetch = async (text,size=30,index=0) => {
 		const r = await axios.get(uri,{
 			responseType: 'json'
 		});
+        console.log(/r/,r)
 		const data = r.data.linkData.map(p => {
 			return {
 				src: p.thumbnailUrl,
@@ -21,7 +22,7 @@ const searchFetch = async (text,size=30,index=0) => {
 		});
 		return data;
 	}catch(e){
-		console.log(e)
+		console.log(/e/,e)
 		return [];
 	}
 };
