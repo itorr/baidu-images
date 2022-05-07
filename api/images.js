@@ -26,7 +26,7 @@ const searchFetch = async (text,size=30,index=0) => {
 };
 
 export default async function handler(req, res) {
-    const query = request.query;
+    const query = req.query;
     let { size, index, text } = query;
 
     size = Number(size) || 30
