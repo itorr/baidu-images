@@ -1,5 +1,8 @@
 {
   "license": "ISC",
+  "name": "baidu-image-api",
+  "version": "1.0.0",
+  "author": "",
   "dependencies": {
     "axios": "^0.27.2"
   }
