@@ -22,7 +22,7 @@ const searchFetch = async (text,size=30,index=0) => {
 		});
 		return data;
 	}catch(e){
-		console.log(/e/,e)
+		throw e
 		return [];
 	}
 };
@@ -40,5 +40,5 @@ export default async function handler(req, res) {
     //     cookies: request.cookies,
     // }
 
-    res.status(200).json(searchFetch(text.size,index));
+    res.status(200).json(await searchFetch(text.size,index));
 }
