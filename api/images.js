@@ -21,6 +21,7 @@ const searchFetch = async (text,size=30,index=0) => {
 		});
 		return data;
 	}catch(e){
+		console.log(e)
 		return [];
 	}
 };
