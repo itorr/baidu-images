@@ -45,6 +45,41 @@ if(/magiconch/.test(hostName)) baseAPIURL = `//lab.magiconch.com/api/`;
 
 const size = 30;
 
+const searchFatch = (text,size,index,onOver)=>{
+
+	if(window['GM_xmlhttpRequest']){
+		const url = `https://m.baidu.com/sf/vsearch/image/search/wisesearchresult?word=${encodeURIComponent(text)}&pn=${index}&rn=${size}`;
+
+		GM_xmlhttpRequest({
+			method: 'GET',
+			responseType: 'json',
+			url,
+			onload(res) {
+				const { response } = res.response;
+
+				const data = response.linkData.map(p => {
+					return {
+						src: p.thumbnailUrl,
+						ori: p.objurl,
+						url: p.fromUrl,
+						title: p.oriTitle,
+						width: p.width,
+						height: p.height,
+						hex: p.shituToken
+					}
+				});
+				onOver(data);
+			}
+		});
+
+		return;
+	}
+
+	const uri = `${baseAPIURL}baidu/images?text=${encodeURIComponent(text)}&index=${index}&size=${size}`;
+
+	request('get',uri,null,onOver);
+}
+
 const app = new Vue({
 	el,
 	data,
@@ -65,9 +100,7 @@ const app = new Vue({
 			}
 			this.runing = true;
 
-			const uri = `${baseAPIURL}baidu/images?text=${encodeURIComponent(text)}&index=${index}&size=${size}`;
-
-			request('get',uri,null,r=>{
+			searchFatch(text,size,index,r=>{
 				this.runing = false;
 				this.index = index;
 				this.images = r;
