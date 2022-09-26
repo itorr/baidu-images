@@ -55,7 +55,7 @@ const searchFatch = (text,size,index,onOver)=>{
 			responseType: 'json',
 			url,
 			onload(res) {
-				const { response } = res.response;
+				const { response } = res;
 
 				const data = response.linkData.map(p => {
 					return {
