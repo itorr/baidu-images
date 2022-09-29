@@ -9,9 +9,16 @@
         <input type="search" v-model.lazy.trim="text" placeholder="输入关键字提交搜索">
     </form>
     <div class="images-box" ref="images-box" v-if="images.length" :style="{height:`${imagesHeight}px`}">
-        <div class="image-item" v-for="image in images" :key="image.src" :style="{width:image._width+'px',top:image._top+'px',left:image._left+'px',color:`#${image.hex}`}">
-            <a class="image-link" :href="image.ori" target="_blank" :style="{width:image._width+'px',height:image._height+'px'}">
-                <img :src="image.src" :style="{width:image._width+'px',height:image._height+'px'}">
+        <div class="image-item" 
+            v-for="image in images" 
+            :key="image.src" 
+            :style="{width:image._width+'px',top:image._top+'px',left:image._left+'px',color:`#${image.hex||'000'}`}">
+            <a class="image-link" 
+                :href="image.ori || image.src" 
+                target="_blank" 
+                :style="{width:image._width+'px',height:image._height+'px'}">
+                <img :src="image.src" 
+                    :style="{width:image._width+'px',height:image._height+'px'}">
             </a>
             <a class="image-origin-link" :href="image.url" target="_blank">
                 <span class="title">{{image.title}}</span>
