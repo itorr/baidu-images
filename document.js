@@ -29,10 +29,13 @@ const getQuerys = _=>{
 
 const deepCopy = o=>JSON.parse(JSON.stringify(o));
 let images = [];
+const size = 60;
+
 const data = {
 	text:'',
 	images,
 	index:0,
+	size,
 	runing:false,
 	simple:true,
 	animation:false,
@@ -43,7 +46,6 @@ const hostName = location.hostname;
 let baseAPIURL = `http://${hostName}:60912/api/`;
 if(/magiconch/.test(hostName)) baseAPIURL = `//lab.magiconch.com/api/`;
 
-const size = 30;
 
 const searchFatch = (text,size,index,onOver)=>{
 
@@ -177,6 +179,23 @@ const app = new Vue({
 		},
 		next(){
 			this.search(this.text,this.index + size,true,_=>scrollTo(0,0));
+		},
+		getHostFromURL(url){
+			if(!url) return;
+			if(url.constructor !== String) return;
+
+			try{
+				url = url.replace(/^\w+:\/\//,'');
+				url = url.replace(/^www\./,'');
+				url = url.replace(/\/.+$/,'');
+				url = url.replace(/\/$/,'');
+				return url;
+				// return new URL(url).hostname.replace(/^www\./,'');
+			}catch(e){
+
+				return url;
+			}
+			
 		}
 	},
 	watch:{

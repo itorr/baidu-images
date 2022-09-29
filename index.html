@@ -22,12 +22,15 @@
             </a>
             <a class="image-origin-link" :href="image.url" target="_blank">
                 <span class="title">{{image.title}}</span>
-                <span class="link">{{new URL(image.url).hostname.replace(/^www\./,'')}}</span>
+                <span class="link">{{getHostFromURL(image.url)}}</span>
             </a>
         </div>
     </div>
     <div class="welcome-box" v-else-if="runing">
         <h1>搜索中...</h1>
+    </div>
+    <div class="welcome-box" v-else-if="!images.length && index">
+        <h1>到头了</h1>
     </div>
     <div class="welcome-box" v-else>
         <h1>百度图像搜索极简版</h1>
@@ -63,7 +66,7 @@
     <div class="page-box">
         <a @click.stop.prevent="prev" class="more-btn" v-if="index !== 0">上一页</a>
         <span v-if="images.length" class="page-number">{{index}} ~ {{index + images.length}}</span>
-        <a @click.stop.prevent="next" class="more-btn" v-if="images.length === 30">下一页</a>
+        <a @click.stop.prevent="next" class="more-btn" v-if="images.length === size">下一页</a>
     </div>
     <footer>
         <p>百度图片搜索<label class="checkbox-text-switch"><input type="checkbox" v-model="simple"><span>极简</span></label>版</p>
